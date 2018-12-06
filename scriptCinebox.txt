@@ -1,0 +1,407 @@
+
+CREATE TABLE def_ciudad (
+                id_ciudad INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(20) NOT NULL,
+                PRIMARY KEY (id_ciudad)
+);
+
+
+CREATE TABLE def_categoria (
+                id_categoria INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(10) NOT NULL,
+                PRIMARY KEY (id_categoria)
+);
+
+
+CREATE TABLE def_genero (
+                id_genero INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(20) NOT NULL,
+                PRIMARY KEY (id_genero)
+);
+
+
+CREATE TABLE def_formato (
+                id_formato INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(10) NOT NULL,
+                PRIMARY KEY (id_formato)
+);
+
+
+CREATE TABLE sys_acceso (
+                id_acceso INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(30) NOT NULL,
+                codigoSeguridad NUMERIC(4) NOT NULL,
+                PRIMARY KEY (id_acceso)
+);
+
+
+CREATE TABLE sys_perfil (
+                id_perfil INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(30) NOT NULL,
+                descripcion VARCHAR(80) NOT NULL,
+                estado NUMERIC(1) NOT NULL,
+                PRIMARY KEY (id_perfil)
+);
+
+ALTER TABLE sys_perfil MODIFY COLUMN estado NUMERIC(1) COMMENT '1 = Activo,
+0 = Inactivo';
+
+
+CREATE TABLE glo_uscliente (
+                id_cliente INT AUTO_INCREMENT NOT NULL,
+                codigo VARCHAR(10) NOT NULL,
+                nombre VARCHAR(30) NOT NULL,
+                apPaterno VARCHAR(30) NOT NULL,
+                genero VARCHAR(1) NOT NULL,
+                fechaNac DATE NOT NULL,
+                ncelular NUMERIC(10),
+                email VARCHAR(40) NOT NULL,
+                password VARCHAR(30) NOT NULL,
+                id_perfil INT NOT NULL,
+                PRIMARY KEY (id_cliente)
+);
+
+
+CREATE TABLE sys_acceso_pefil (
+                id_acceso_perfil INT AUTO_INCREMENT NOT NULL,
+                id_perfil INT NOT NULL,
+                id_acceso INT NOT NULL,
+                PRIMARY KEY (id_acceso_perfil)
+);
+
+
+CREATE TABLE def_tipo_merienda (
+                id_tmerienda INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(20) NOT NULL,
+                PRIMARY KEY (id_tmerienda)
+);
+
+
+CREATE TABLE def_tipo_entrada (
+                id_tipoEntrada INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(20) NOT NULL,
+                descripcion VARCHAR(30) NOT NULL,
+                PRIMARY KEY (id_tipoEntrada)
+);
+
+
+CREATE TABLE glo_pelicula (
+                id_pelicula INT AUTO_INCREMENT NOT NULL,
+                titulo VARCHAR(30) NOT NULL,
+                codigo VARCHAR(10) NOT NULL,
+                duracion NUMERIC(3) NOT NULL,
+                director VARCHAR(30) NOT NULL,
+                sinopsis VARCHAR(200) NOT NULL,
+                imagenRuta VARCHAR(20) NOT NULL,
+                id_genero INT NOT NULL,
+                id_categoria INT NOT NULL,
+                reparto VARCHAR(100) NOT NULL,
+                PRIMARY KEY (id_pelicula)
+);
+
+ALTER TABLE glo_pelicula MODIFY COLUMN duracion NUMERIC(3) COMMENT 'Duracion en minutos';
+
+
+CREATE TABLE glo_merienda (
+                id_merienda INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(30) NOT NULL,
+                descripcion VARCHAR(60) NOT NULL,
+                imagenRuta VARCHAR(30) NOT NULL,
+                id_tmerienda INT NOT NULL,
+                PRIMARY KEY (id_merienda)
+);
+
+
+CREATE TABLE glo_sucursal (
+                id_sucursal INT AUTO_INCREMENT NOT NULL,
+                nombre VARCHAR(30) NOT NULL,
+                direccion VARCHAR(40) NOT NULL,
+                id_ciudad INT NOT NULL,
+                PRIMARY KEY (id_sucursal)
+);
+
+
+CREATE TABLE glo_usadmin (
+                id_admin INT AUTO_INCREMENT NOT NULL,
+                codigo VARCHAR(10) NOT NULL,
+                nombre VARCHAR(30) NOT NULL,
+                apPaterno VARCHAR(30) NOT NULL,
+                apMaterno VARCHAR(30) NOT NULL,
+                genero VARCHAR(1) NOT NULL,
+                ncelular NUMERIC(10) NOT NULL,
+                fechaNac DATE NOT NULL,
+                dni VARCHAR(10) NOT NULL,
+                direccion VARCHAR(50) NOT NULL,
+                email VARCHAR(40) NOT NULL,
+                password VARCHAR(30) NOT NULL,
+                id_sucursal INT NOT NULL,
+                id_perfil INT NOT NULL,
+                PRIMARY KEY (id_admin)
+);
+
+
+CREATE TABLE glo_cartelera_pelicula (
+                id_carteleraPelicula INT AUTO_INCREMENT NOT NULL,
+                fechaInicio DATE NOT NULL,
+                fechaFin DATE NOT NULL,
+                id_pelicula INT NOT NULL,
+                id_sucursal INT NOT NULL,
+                PRIMARY KEY (id_carteleraPelicula)
+);
+
+
+CREATE TABLE glo_merienda_sucursal (
+                id_mersuc INT AUTO_INCREMENT NOT NULL,
+                id_merienda INT NOT NULL,
+                id_sucursal INT NOT NULL,
+                precio NUMERIC(5,2) NOT NULL,
+                PRIMARY KEY (id_mersuc)
+);
+
+
+CREATE TABLE glo_tentrada_sucursal (
+                id_tentsuc INT AUTO_INCREMENT NOT NULL,
+                id_tipoEntrada INT NOT NULL,
+                precio NUMERIC(5,2) NOT NULL,
+                id_sucursal INT NOT NULL,
+                id_formato INT NOT NULL,
+                PRIMARY KEY (id_tentsuc)
+);
+
+
+CREATE TABLE glo_sala (
+                id_sala INT AUTO_INCREMENT NOT NULL,
+                numero NUMERIC(2) NOT NULL,
+                capacidad NUMERIC NOT NULL,
+                nFilas NUMERIC(2) NOT NULL,
+                nColumnas NUMERIC(2) NOT NULL,
+                id_formato INT NOT NULL,
+                id_sucursal INT NOT NULL,
+                PRIMARY KEY (id_sala)
+);
+
+
+CREATE TABLE glo_funcion (
+                id_funcion INT AUTO_INCREMENT NOT NULL,
+                hora VARCHAR(10) NOT NULL,
+                calidad VARCHAR(5) NOT NULL,
+                fecha DATE NOT NULL,
+                idioma VARCHAR(3) NOT NULL,
+                id_pelicula INT NOT NULL,
+                id_sucursal INT NOT NULL,
+                id_sala INT NOT NULL,
+                id_formato INT NOT NULL,
+                PRIMARY KEY (id_funcion)
+);
+
+ALTER TABLE glo_funcion MODIFY COLUMN calidad VARCHAR(5) COMMENT 'HD, 3D';
+
+ALTER TABLE glo_funcion MODIFY COLUMN idioma VARCHAR(3) COMMENT 'sub = subtitulada,
+dob = doblada';
+
+
+CREATE TABLE vent_boleto (
+                id_boleto INT AUTO_INCREMENT NOT NULL,
+                total NUMERIC(5,2) NOT NULL,
+                serie VARCHAR(10) NOT NULL,
+                fechaHora DATETIME NOT NULL,
+                cantEntrada NUMERIC(2) NOT NULL,
+                id_funcion INT NOT NULL,
+                nbutacas VARCHAR(40) NOT NULL,
+                asistencia BOOLEAN NOT NULL,
+                codigoqr VARCHAR(10) NOT NULL,
+                fechaVenc DATETIME NOT NULL,
+                id_cliente INT NOT NULL,
+                PRIMARY KEY (id_boleto)
+);
+
+ALTER TABLE vent_boleto MODIFY COLUMN fechaHora TIMESTAMP COMMENT 'Fecha y hora en que entra en vigencia.';
+
+ALTER TABLE vent_boleto MODIFY COLUMN fechaVenc TIMESTAMP COMMENT 'Fecha de caducidad (HoraFuncion + DuracionPelicula).';
+
+
+CREATE TABLE vent_boleto_merienda (
+                id_boletoMerienda INT AUTO_INCREMENT NOT NULL,
+                id_merienda INT NOT NULL,
+                id_boleto INT NOT NULL,
+                cantidad NUMERIC(2) NOT NULL,
+                PRIMARY KEY (id_boletoMerienda)
+);
+
+
+CREATE TABLE vent_boleto_tentrada (
+                id_boletoTentrada INT AUTO_INCREMENT NOT NULL,
+                id_tipoEntrada INT NOT NULL,
+                id_boleto INT NOT NULL,
+                precioUnitario NUMERIC(5,2) NOT NULL,
+                PRIMARY KEY (id_boletoTentrada)
+);
+
+
+ALTER TABLE glo_sucursal ADD CONSTRAINT ciudad_sucursal_fk
+FOREIGN KEY (id_ciudad)
+REFERENCES def_ciudad (id_ciudad)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_pelicula ADD CONSTRAINT categoria_pelicula_fk
+FOREIGN KEY (id_categoria)
+REFERENCES def_categoria (id_categoria)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_pelicula ADD CONSTRAINT genero_pelicula_fk
+FOREIGN KEY (id_genero)
+REFERENCES def_genero (id_genero)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_sala ADD CONSTRAINT tiposala_sala_fk
+FOREIGN KEY (id_formato)
+REFERENCES def_formato (id_formato)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_funcion ADD CONSTRAINT formato_funcion_fk
+FOREIGN KEY (id_formato)
+REFERENCES def_formato (id_formato)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_tentrada_sucursal ADD CONSTRAINT def_formato_glo_tentrada_sucursal_fk
+FOREIGN KEY (id_formato)
+REFERENCES def_formato (id_formato)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE sys_acceso_pefil ADD CONSTRAINT acceso_acceso_pefil_fk
+FOREIGN KEY (id_acceso)
+REFERENCES sys_acceso (id_acceso)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE sys_acceso_pefil ADD CONSTRAINT perfil_acceso_pefil_fk
+FOREIGN KEY (id_perfil)
+REFERENCES sys_perfil (id_perfil)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_usadmin ADD CONSTRAINT perfil_usadmin_fk
+FOREIGN KEY (id_perfil)
+REFERENCES sys_perfil (id_perfil)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_uscliente ADD CONSTRAINT perfil_uscliente_fk
+FOREIGN KEY (id_perfil)
+REFERENCES sys_perfil (id_perfil)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE vent_boleto ADD CONSTRAINT uscliente_boleto_fk
+FOREIGN KEY (id_cliente)
+REFERENCES glo_uscliente (id_cliente)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_merienda ADD CONSTRAINT tipomerienda_merienda_fk
+FOREIGN KEY (id_tmerienda)
+REFERENCES def_tipo_merienda (id_tmerienda)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE vent_boleto_tentrada ADD CONSTRAINT tipoentrada_entrada_fk
+FOREIGN KEY (id_tipoEntrada)
+REFERENCES def_tipo_entrada (id_tipoEntrada)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_tentrada_sucursal ADD CONSTRAINT tipoentrada_tentrada_sucursal_fk
+FOREIGN KEY (id_tipoEntrada)
+REFERENCES def_tipo_entrada (id_tipoEntrada)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_cartelera_pelicula ADD CONSTRAINT pelicula_cartelera_pelicula_fk
+FOREIGN KEY (id_pelicula)
+REFERENCES glo_pelicula (id_pelicula)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_funcion ADD CONSTRAINT pelicula_funcion_fk
+FOREIGN KEY (id_pelicula)
+REFERENCES glo_pelicula (id_pelicula)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE vent_boleto_merienda ADD CONSTRAINT merienda_boleto_merienda_fk
+FOREIGN KEY (id_merienda)
+REFERENCES glo_merienda (id_merienda)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_merienda_sucursal ADD CONSTRAINT merienda_merienda_sucursal_fk
+FOREIGN KEY (id_merienda)
+REFERENCES glo_merienda (id_merienda)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_funcion ADD CONSTRAINT sucursal_funcion_fk
+FOREIGN KEY (id_sucursal)
+REFERENCES glo_sucursal (id_sucursal)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_tentrada_sucursal ADD CONSTRAINT sucursal_tentrada_sucursal_fk
+FOREIGN KEY (id_sucursal)
+REFERENCES glo_sucursal (id_sucursal)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_merienda_sucursal ADD CONSTRAINT sucursal_merienda_sucursal_fk
+FOREIGN KEY (id_sucursal)
+REFERENCES glo_sucursal (id_sucursal)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_cartelera_pelicula ADD CONSTRAINT sucursal_cartelera_pelicula_fk
+FOREIGN KEY (id_sucursal)
+REFERENCES glo_sucursal (id_sucursal)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_usadmin ADD CONSTRAINT sucursal_usadmin_fk
+FOREIGN KEY (id_sucursal)
+REFERENCES glo_sucursal (id_sucursal)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_sala ADD CONSTRAINT sucursal_sala_fk
+FOREIGN KEY (id_sucursal)
+REFERENCES glo_sucursal (id_sucursal)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE glo_funcion ADD CONSTRAINT sala_funcion_fk
+FOREIGN KEY (id_sala)
+REFERENCES glo_sala (id_sala)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE vent_boleto ADD CONSTRAINT funcion_boleto_fk
+FOREIGN KEY (id_funcion)
+REFERENCES glo_funcion (id_funcion)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE vent_boleto_tentrada ADD CONSTRAINT boleto_entrada_fk
+FOREIGN KEY (id_boleto)
+REFERENCES vent_boleto (id_boleto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE vent_boleto_merienda ADD CONSTRAINT boleto_boleto_merienda_fk
+FOREIGN KEY (id_boleto)
+REFERENCES vent_boleto (id_boleto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
