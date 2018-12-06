@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="pe.com.cinebox_CBDashboard_war_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>pe.com.cinebox.modelo.Acceso</class>
+    <class>pe.com.cinebox.modelo.AccesoPefil</class>
+    <class>pe.com.cinebox.modelo.Genero</class>
+    <class>pe.com.cinebox.modelo.Categoria</class>
+    <class>pe.com.cinebox.modelo.Pelicula</class>
+    <class>pe.com.cinebox.modelo.Sucursal</class>
+    <class>pe.com.cinebox.modelo.Boleto</class>
+    <class>pe.com.cinebox.modelo.MeriendaSucursal</class>
+    <class>pe.com.cinebox.modelo.BoletoMerienda</class>
+    <class>pe.com.cinebox.modelo.Sala</class>
+    <class>pe.com.cinebox.modelo.Tipoentrada</class>
+    <class>pe.com.cinebox.modelo.Perfil</class>
+    <class>pe.com.cinebox.modelo.Tipomerienda</class>
+    <class>pe.com.cinebox.modelo.Tiposala</class>
+    <class>pe.com.cinebox.modelo.Cliente</class>
+    <class>pe.com.cinebox.modelo.Cargo</class>
+    <class>pe.com.cinebox.modelo.Ciudad</class>
+    <class>pe.com.cinebox.modelo.Usuario</class>
+    <class>pe.com.cinebox.modelo.Admin</class>
+    <class>pe.com.cinebox.modelo.CarteleraPelicula</class>
+    <class>pe.com.cinebox.modelo.Merienda</class>
+    <class>pe.com.cinebox.modelo.Funcion</class>
+    <class>pe.com.cinebox.modelo.Persona</class>
+    <class>pe.com.cinebox.modelo.Entrada</class>
+    <class>pe.com.cinebox.modelo.TentradaSucursal</class>
+    <class>pe.com.cinebox.modelo.Uscliente</class>
+    <class>pe.com.cinebox.modelo.Usadmin</class>
+    <class>pe.com.cinebox.modelo.VentBoleto</class>
+    <class>pe.com.cinebox.modelo.GloUsadmin</class>
+    <class>pe.com.cinebox.modelo.VentBoletoMerienda</class>
+    <class>pe.com.cinebox.modelo.SysAccesoPefil</class>
+    <class>pe.com.cinebox.modelo.DefGenero</class>
+    <class>pe.com.cinebox.modelo.GloTentradaSucursal</class>
+    <class>pe.com.cinebox.modelo.GloSala</class>
+    <class>pe.com.cinebox.modelo.DefCategoria</class>
+    <class>pe.com.cinebox.modelo.GloMeriendaSucursal</class>
+    <class>pe.com.cinebox.modelo.DefTipoMerienda</class>
+    <class>pe.com.cinebox.modelo.VentBoletoTentrada</class>
+    <class>pe.com.cinebox.modelo.GloUscliente</class>
+    <class>pe.com.cinebox.modelo.DefCiudad</class>
+    <class>pe.com.cinebox.modelo.GloFuncion</class>
+    <class>pe.com.cinebox.modelo.GloSucursal</class>
+    <class>pe.com.cinebox.modelo.GloCarteleraPelicula</class>
+    <class>pe.com.cinebox.modelo.GloMerienda</class>
+    <class>pe.com.cinebox.modelo.GloPelicula</class>
+    <class>pe.com.cinebox.modelo.SysAcceso</class>
+    <class>pe.com.cinebox.modelo.SysPerfil</class>
+    <class>pe.com.cinebox.modelo.DefFormato</class>
+    <class>pe.com.cinebox.modelo.DefTipoEntrada</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cineboxdb?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
+</persistence>
